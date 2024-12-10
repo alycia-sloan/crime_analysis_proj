@@ -26,7 +26,6 @@ def load_data(directory):
 def clean_data(dataframes, file_name):
 
     #check filename is in csv files
-    #***Note working
     if file_name not in dataframes:
         print(f"{file_name} not found in loaded data")
         return None
@@ -34,3 +33,4 @@ def clean_data(dataframes, file_name):
     #look for missing values
     #missing = file_name.isna().sum()
     #print(missing)
+
