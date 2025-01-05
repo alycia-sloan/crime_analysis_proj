@@ -23,14 +23,26 @@ def load_data(directory):
         print(f'Error loading {file_path}: {e}')
         return None
     
-def clean_data(dataframes, file_name):
+def load_file_data(dataframes, file_name):
 
     #check filename is in csv files
     if file_name not in dataframes:
         print(f"{file_name} not found in loaded data")
         return None
     
-    #look for missing values
-    #missing = file_name.isna().sum()
-    #print(missing)
+    #load individual file into it's own dataframe
+    read_file_data = pd.read_csv('VA-2023/data/VA/' + file_name)
+    #print(read_file_data.head())
+
+    #find missing values -- **NEED TO DECIDE HOW TO HANDLE IF VALUES ARE MISSING
+    print("Missing Values")
+    print(read_file_data.isnull().sum())
+
+    #check data types -- **NEED TO DECIDE HOW TO HANDLE IF TYPES ARE WRONG
+    print("Checking Data Types")
+    print(read_file_data.dtypes)
+
+    
+
+    
 
