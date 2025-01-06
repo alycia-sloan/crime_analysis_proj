@@ -2,6 +2,7 @@
 
 import pandas as pd
 import os
+import datetime
 
 
 def load_data(directory):
@@ -46,14 +47,17 @@ def load_file_data(dataframes, file_name):
     return read_file_data
 
 def remove_value_column(d_frame,column_name):
-    #print(d_frame)
+    #removes column_name from d_frame
     d_frame.drop(column_name, axis = 1, inplace = True)
-
-    print("Missing Values")
-    print(d_frame.isnull().sum())
-    print("\n")
-
     return d_frame
+    
+def change_obj(d_frame, column_name, object_type):
+    if object_type == 'datetime':
+        d_frame[column_name] = pd.to_datetime(d_frame[column_name])
+        print(d_frame.dtypes)
+       
+    else:
+        print("Not DateTime")
     
 
 
