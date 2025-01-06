@@ -37,10 +37,25 @@ def load_file_data(dataframes, file_name):
     #find missing values -- **NEED TO DECIDE HOW TO HANDLE IF VALUES ARE MISSING
     print("Missing Values")
     print(read_file_data.isnull().sum())
+    print("\n")
 
     #check data types -- **NEED TO DECIDE HOW TO HANDLE IF TYPES ARE WRONG
     print("Checking Data Types")
     print(read_file_data.dtypes)
+    print("\n")
+    return read_file_data
+
+def remove_value_column(d_frame,column_name):
+    #print(d_frame)
+    d_frame.drop(column_name, axis = 1, inplace = True)
+
+    print("Missing Values")
+    print(d_frame.isnull().sum())
+    print("\n")
+
+    return d_frame
+    
+
 
     
 
