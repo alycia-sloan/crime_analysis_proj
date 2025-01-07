@@ -34,6 +34,11 @@ def load_file_data(dataframes, file_name):
     #load individual file into it's own dataframe
     read_file_data = pd.read_csv('VA-2023/data/VA/' + file_name)
     #print(read_file_data.head())
+    return read_file_data
+
+def check_type_missing(file_name):
+
+    read_file_data = pd.read_csv('VA-2023/data/VA/' + file_name)
 
     #find missing values
     print("Missing Values")
@@ -44,7 +49,6 @@ def load_file_data(dataframes, file_name):
     print("Checking Data Types")
     print(read_file_data.dtypes)
     print("\n")
-    return read_file_data
 
 def remove_value_column(d_frame,column_name):
     #removes column_name from d_frame

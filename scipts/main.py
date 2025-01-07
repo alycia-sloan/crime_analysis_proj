@@ -26,6 +26,7 @@ csv_incident = load_file_data(csv_data, 'NIBRS_incident.csv')
 
 csv_offense = load_file_data(csv_data, 'NIBRS_OFFENSE.csv')
 
+check_weapon = check_type_missing("NIBRS_weapon.csv")
 
 offense_arrestee_join = data_join(csv_offense, csv_arrestee, "incident_id")
 
