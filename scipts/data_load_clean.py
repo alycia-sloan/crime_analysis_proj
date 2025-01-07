@@ -35,12 +35,12 @@ def load_file_data(dataframes, file_name):
     read_file_data = pd.read_csv('VA-2023/data/VA/' + file_name)
     #print(read_file_data.head())
 
-    #find missing values -- **NEED TO DECIDE HOW TO HANDLE IF VALUES ARE MISSING
+    #find missing values
     print("Missing Values")
     print(read_file_data.isnull().sum())
     print("\n")
 
-    #check data types -- **NEED TO DECIDE HOW TO HANDLE IF TYPES ARE WRONG
+    #check data types
     print("Checking Data Types")
     print(read_file_data.dtypes)
     print("\n")
@@ -60,6 +60,7 @@ def change_type(d_frame, column_name, object_type):
         d_frame[column_name] = d_frame[column_name].astype(object_type)
         return d_frame
     #print(d_frame.dtypes)
+
 
 
     
