@@ -10,6 +10,7 @@ csv_clean_arrestee = load_file_data(csv_data, "NIBRS_ARRESTEE.csv")
 
 remove_arrestee_column = remove_value_column(csv_clean_arrestee, 'age_range_high_num')
 
-remove_arrestee_column = remove_value_column(csv_clean_arrestee, 'clearance_ind')
+remove_arrestee_column2 = remove_value_column(csv_clean_arrestee, 'clearance_ind')
 
-object_change_arrestee = change_obj(remove_arrestee_column, 'arrest_date', 'datetime')
+object_change_arrestee = change_type(remove_arrestee_column2, 'arrest_date', 'datetime')
+
