@@ -30,15 +30,27 @@ def process_arrestee_offense_incident_weapon_df(csv_data):
     offenses_weapon_names = pd.merge(offenses_weapons, csv_weapon_type,on = 'weapon_id', how = 'left' )
     return offenses_weapon_names
 
-def arrestee_age(csv_data):
+def arrestee_age_graph(csv_data):
     csv_arrestee = load_file_data(csv_data, "NIBRS_ARRESTEE.csv")
-    csv_age = load_file_data(csv_data, 'NIBRS_AGE.csv')
-    #print(csv_age['age_id'])
-    age_arrestee_merge = pd.merge(csv_arrestee, csv_age, on = "age_id")
-    age_df = age_arrestee_merge[['age_id']]
-    #age_counts = age_arrestee_merge['age_code'].value_counts()
-    #sort_age_counts = age_counts.sort_values(by = 'age_code', ascending = False)
-    #print(sort_age_counts)   
+    #arrestee_age = csv_arrestee['age_num']
+    bins = [0, 18, 25, 35, 45, 55, 65, 120]
+    labels =  ['<18', '18-24', '25-34', '35-44', '45-54', '55-64', '65+']
+    csv_arrestee['age_group'] = pd.cut(csv_arrestee['age_num'], bins = bins, labels = labels, right = False )
+    age_groups = csv_arrestee.groupby('age_group')
+    age_group_counts = age_groups.size().reset_index(name = 'counts')
+    age_labels = age_group_counts['age_group']
+    sizes = age_group_counts['counts']
+    plt.figure(figsize=(8,8))
+    plt.pie(sizes, labels = age_labels)
+    plt.title("Age Distribution of Arrestees")
+    plt.show()
+
+    
+    #print(age_group_counts)
+
+
+
+    
 
 '''
 def weapons_to_offenses(df):
@@ -51,6 +63,6 @@ def weapons_to_offenses(df):
     #plt.show()
 '''
 general_weap_arr_inc_off_df = process_arrestee_offense_incident_weapon_df(csv_data)
-arrestee_age(csv_data)
+arrestee_age_graph(csv_data)
 #weapons_to_offenses(general_weap_arr_inc_off_df)
 
