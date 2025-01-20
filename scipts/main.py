@@ -57,8 +57,17 @@ def arrestee_age_exp(csv_data):
     print(f"Mode age of arrestees: {round(csv_age_mode,3).iloc[0]}")
     print(f"Median age of arrestees: {round(csv_age_median,3)}")
 
+def gen_df(csv_data):
+    csv_arrestee = load_file_data(csv_data, "NIBRS_ARRESTEE.csv")
+    csv_explore_df = csv_arrestee[['arrest_date','arrestee_id','incident_id','offense_code','age_num','sex_code']].copy()
+    #sum_missing = csv_explore_df.isnull().sum()
+    #change arrest_date to date type, otherwise good
+    print(csv_explore_df.dtypes)
+
 general_weap_arr_inc_off_df = process_arrestee_offense_incident_weapon_df(csv_data)
+gen_df(csv_data)
 #arrestee_age_graph(csv_data)
 #weapons_to_offenses(general_weap_arr_inc_off_df)
-arrestee_age_exp(csv_data)
+#arrestee_age_exp(csv_data)
+
 
