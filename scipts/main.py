@@ -3,6 +3,7 @@ from data_join import *
 import seaborn as sns
 import matplotlib.pyplot as plt
 from statistics import mean, median, mode
+import pandas as pd
 
 directory = 'VA-2023/data/VA'
 
@@ -33,7 +34,6 @@ def process_arrestee_offense_incident_weapon_df(csv_data):
 
 def arrestee_age_graph(csv_data):
     csv_arrestee = load_file_data(csv_data, "NIBRS_ARRESTEE.csv")
-    #arrestee_age = csv_arrestee['age_num']
     bins = [0, 18, 25, 35, 45, 55, 65, 120]
     labels =  ['<18', '18-24', '25-34', '35-44', '45-54', '55-64', '65+']
     csv_arrestee['age_group'] = pd.cut(csv_arrestee['age_num'], bins = bins, labels = labels, right = False )
@@ -47,24 +47,18 @@ def arrestee_age_graph(csv_data):
     plt.title("Age Distribution of Arrestees")
     plt.show()
 
-    
-    #print(age_group_counts)
+def arrestee_age_exp(csv_data):
+    csv_arrestee = load_file_data(csv_data, "NIBRS_ARRESTEE.csv")
+    csv_arr_age = csv_arrestee[['age_num']].copy()
+    csv_age_mean = csv_arr_age['age_num'].mean()
+    csv_age_mode = csv_arr_age['age_num'].mode()
+    csv_age_median = csv_arr_age['age_num'].median()
+    print(f"Mean age of arrestees: {round(csv_age_mean,3)}")
+    print(f"Mode age of arrestees: {round(csv_age_mode,3).iloc[0]}")
+    print(f"Median age of arrestees: {round(csv_age_median,3)}")
 
-
-
-    
-
-'''
-def weapons_to_offenses(df):
-    weapon_offense_df = df[['weapon_name','offense_name']]
-    counts = weapon_offense_df['weapon_name'].value_counts()
-    pivot_df = pd.crosstab(df['offense_name'], df['weapon_name'])
-    print(pivot_df.head())
-    print(pivot_df.corr())
-    #pivot_df.plot(kind = 'barh', stacked = True)
-    #plt.show()
-'''
 general_weap_arr_inc_off_df = process_arrestee_offense_incident_weapon_df(csv_data)
-arrestee_age_graph(csv_data)
+#arrestee_age_graph(csv_data)
 #weapons_to_offenses(general_weap_arr_inc_off_df)
+arrestee_age_exp(csv_data)
 
