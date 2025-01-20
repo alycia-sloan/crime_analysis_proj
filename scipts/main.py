@@ -2,6 +2,7 @@ from data_load_clean import *
 from data_join import *
 import seaborn as sns
 import matplotlib.pyplot as plt
+from statistics import mean, median, mode
 
 directory = 'VA-2023/data/VA'
 
@@ -41,7 +42,8 @@ def arrestee_age_graph(csv_data):
     age_labels = age_group_counts['age_group']
     sizes = age_group_counts['counts']
     plt.figure(figsize=(8,8))
-    plt.pie(sizes, labels = age_labels)
+    colors = sns.color_palette('rocket')
+    plt.pie(sizes, labels = age_labels, wedgeprops = { 'linewidth' : 1, 'edgecolor' : 'white' }, colors = colors)
     plt.title("Age Distribution of Arrestees")
     plt.show()
 
