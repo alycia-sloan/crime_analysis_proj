@@ -4,6 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from statistics import mean, median, mode
 import pandas as pd
+import numpy as np
+
 
 directory = 'VA-2023/data/VA'
 
@@ -59,10 +61,25 @@ def arrestee_age_exp(csv_data):
 
 def gen_df(csv_data):
     csv_arrestee = load_file_data(csv_data, "NIBRS_ARRESTEE.csv")
+    csv_offense_codes = load_file_data(csv_data, "NIBRS_OFFENSE_TYPE.csv")
     csv_explore_df = csv_arrestee[['arrest_date','arrestee_id','incident_id','offense_code','age_num','sex_code']].copy()
-    #sum_missing = csv_explore_df.isnull().sum()
+
     #change arrest_date to date type, otherwise good
-    print(csv_explore_df.dtypes)
+    csv_explore_df['arrest_date'] = pd.to_datetime(csv_explore_df['arrest_date'])
+    csv_offense_df = pd.merge(csv_explore_df, csv_offense_codes, on = 'offense_code')
+    csv_offense_count = csv_offense_df['offense_category_name'].value_counts()
+    csv_offense_df['age_num'] = csv_offense_df['age_num'].replace(0, np.nan)
+    age_stats = csv_offense_df['age_num'].describe()
+
+    offense_age_stats = csv_offense_df.groupby("offense_category_name")['age_num'].agg(['mean','median','min','max','count']).sort_values(by = 'count', ascending = False)
+    offense_sex_distribution = csv_offense_df.groupby(['offense_category_name', 'sex_code']).size().unstack(fill_value = 0)
+
+    print(f"Top Ten Most Common Offense Categories: \n{csv_offense_count.head(10)}")
+    print(f"\nAge Statistics:\n{age_stats}")
+    print(f"\nOffense Age Statistics:\n{offense_age_stats}")
+    print(f"\nOffense Sex Distribution:\n{offense_sex_distribution}")
+
+
 
 general_weap_arr_inc_off_df = process_arrestee_offense_incident_weapon_df(csv_data)
 gen_df(csv_data)
