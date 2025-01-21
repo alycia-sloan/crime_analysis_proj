@@ -71,7 +71,7 @@ def gen_df(csv_data):
     csv_offense_df['age_num'] = csv_offense_df['age_num'].replace(0, np.nan)
     age_stats = csv_offense_df['age_num'].describe()
 
-    offense_age_stats = csv_offense_df.groupby("offense_category_name")['age_num'].agg(['mean','median','min','max','count']).sort_values(by = 'count', ascending = False)
+    offense_age_stats = csv_offense_df.groupby("offense_category_name")['age_num'].agg(['mean','median','min','max','std','count']).sort_values(by = 'count', ascending = False)
     offense_sex_distribution = csv_offense_df.groupby(['offense_category_name', 'sex_code']).size().unstack(fill_value = 0)
 
     print(f"Top Ten Most Common Offense Categories: \n{csv_offense_count.head(10)}")
@@ -79,10 +79,23 @@ def gen_df(csv_data):
     print(f"\nOffense Age Statistics:\n{offense_age_stats}")
     print(f"\nOffense Sex Distribution:\n{offense_sex_distribution}")
 
+    csv_offense_count.plot(kind = 'bar',figsize = (10,6), color = 'skyblue')
+    plt.title('Offense Frequency by Type')
+    plt.xlabel('Offense Type')
+    plt.ylabel('Frequency')
+    plt.xticks(rotation = 45, ha = 'right')
+    plt.tight_layout()
+    plt.show()
+
+    plt.figure(figsize = (20,10))
+    sns.boxplot(data = csv_offense_df, x = 'offense_category_name', y = 'age_num', palette = 'coolwarm')
+    plt.xticks(rotation = 45, ha = 'right')
+    plt.show()
 
 
 general_weap_arr_inc_off_df = process_arrestee_offense_incident_weapon_df(csv_data)
-gen_df(csv_data)
+
+#gen_df(csv_data)
 #arrestee_age_graph(csv_data)
 #weapons_to_offenses(general_weap_arr_inc_off_df)
 #arrestee_age_exp(csv_data)
