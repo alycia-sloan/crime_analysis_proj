@@ -92,9 +92,24 @@ def gen_df(csv_data):
     plt.xticks(rotation = 45, ha = 'right')
     plt.show()
 
+def weapon_offense(csv_data):
+    #csv_arrestee = load_file_data(csv_data, "NIBRS_ARRESTEE.csv")
+    csv_offense_codes = load_file_data(csv_data, "NIBRS_OFFENSE_TYPE.csv")
+    csv_offense = load_file_data(csv_data, "NIBRS_OFFENSE.csv")
+    csv_weapon = load_file_data(csv_data, "NIBRS_WEAPON.csv")
+    csv_weapon_code = load_file_data(csv_data, "NIBRS_WEAPON_TYPE.csv")
+    #offense_arrestee_df = pd.merge(csv_arrestee, csv_offense_codes, on = 'offense_code')
+    offense_weapon_df = pd.merge(csv_offense, csv_weapon, on = 'offense_id')
+    csv_explore_df = offense_weapon_df[['offense_code','offense_id', 'incident_id','weapon_id']].copy()
+    #weapon_offense_df = pd.merge(csv_explore_df, csv_weapon_code, on = 'weapon_id')
+    #print(weapon_offense_df.head(300))
+    #csv_explore_df = offense_arrestee_df[['offense_code','age_num','offense_name','offense_category_name']].copy()
+    #offense_type_df = pd.merge(csv_explore_df, csv_offense, on = 'offense_code')
 
-general_weap_arr_inc_off_df = process_arrestee_offense_incident_weapon_df(csv_data)
 
+
+weapon_offense(csv_data)
+#general_weap_arr_inc_off_df = process_arrestee_offense_incident_weapon_df(csv_data)
 #gen_df(csv_data)
 #arrestee_age_graph(csv_data)
 #weapons_to_offenses(general_weap_arr_inc_off_df)
